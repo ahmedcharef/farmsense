@@ -1,0 +1,139 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Hind", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-earth: var(--earth);
+  --color-earth-foreground: var(--earth-foreground);
+  --color-cherry: var(--cherry);
+  --color-water: var(--water);
+  --color-water-soft: var(--water-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-verified: var(--verified);
+  --color-verified-soft: var(--verified-soft);
+  --color-ai: var(--ai);
+  --color-ai-soft: var(--ai-soft);
+  --color-missing: var(--missing);
+  --color-missing-soft: var(--missing-soft);
+  --color-parchment: var(--parchment);
+  --color-forest: var(--forest);
+  --color-forest-foreground: var(--forest-foreground);
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.98 0.027 90);
+  --foreground: oklch(0.23 0.035 55);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.23 0.035 55);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.23 0.035 55);
+  --primary: oklch(0.45 0.12 145);
+  --primary-foreground: oklch(0.99 0.01 95);
+  --secondary: oklch(0.94 0.045 91);
+  --secondary-foreground: oklch(0.28 0.05 70);
+  --muted: oklch(0.95 0.018 88);
+  --muted-foreground: oklch(0.46 0.025 60);
+  --accent: oklch(0.78 0.16 83);
+  --accent-foreground: oklch(0.25 0.05 60);
+  --destructive: oklch(0.49 0.17 29);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.86 0.03 80);
+  --input: oklch(0.82 0.035 80);
+  --ring: oklch(0.45 0.12 145);
+  --earth: oklch(0.45 0.07 50);
+  --earth-foreground: oklch(0.97 0.015 80);
+  --cherry: oklch(0.49 0.17 29);
+  --water: oklch(0.55 0.1 210);
+  --water-soft: oklch(0.94 0.035 210);
+  --warning: oklch(0.72 0.16 78);
+  --warning-soft: oklch(0.95 0.06 85);
+  --verified: oklch(0.5 0.12 150);
+  --verified-soft: oklch(0.93 0.05 150);
+  --ai: oklch(0.5 0.12 250);
+  --ai-soft: oklch(0.94 0.035 250);
+  --missing: oklch(0.55 0.17 25);
+  --missing-soft: oklch(0.95 0.035 25);
+  --parchment: oklch(0.9 0.04 85);
+  --forest: oklch(0.36 0.1 145);
+  --forest-foreground: oklch(0.96 0.02 110);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+    font-size: 17px;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0;
+  }
+}
+
+@utility surface {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 1px 0 oklch(0.24 0.03 55 / 4%), 0 8px 24px -16px oklch(0.24 0.03 55 / 25%);
+}
+
+@utility bean-pattern {
+  background-image: radial-gradient(oklch(1 0 0 / 7%) 1.5px, transparent 1.6px);
+  background-size: 18px 18px;
+}
+
+@utility simulated-stripe {
+  background-image: repeating-linear-gradient(135deg, transparent 0 6px, oklch(0.5 0.03 60 / 10%) 6px 12px);
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(400%); }
+}
+@utility animate-scan {
+  animation: scan 1.6s linear infinite;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@utility animate-rise {
+  animation: rise 0.45s ease-out both;
+}
