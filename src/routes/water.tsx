@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Camera, CheckCircle2, Cpu, Loader2, Volume2, WifiOff } from "lucide-react";
+import { Camera, CheckCircle2, Cpu, Loader2, WifiOff } from "lucide-react";
 import { useState } from "react";
 import effluent from "@/assets/effluent.jpg";
 import { BigButton, PageHeader, Row, TrustBadge } from "@/components/kit";
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/water")({
   head: () => ({
     meta: [
       { title: "AI Wet-Mill Water Auditor — FarmSense" },
-      { name: "description", content: "Screen wet-mill effluent and create a traceable audit record, with Swahili results." },
+      { name: "description", content: "Screen wet-mill effluent and create a traceable audit record." },
       { property: "og:title", content: "AI Wet-Mill Water Auditor" },
       { property: "og:description", content: "Screen wet-mill effluent and create a traceable audit record." },
       { property: "og:type", content: "website" },
@@ -39,27 +39,12 @@ function Water() {
   const [res, setRes] = useState<EdgeResult | null>(null);
   const [saved, setSaved] = useState(false);
   const [savedJourney, setSavedJourney] = useState(false);
-  const [speaking, setSpeaking] = useState(false);
   const [now] = useState(() => new Date().toISOString());
 
   const run = async (src: string) => {
     setImg(src); setRes(null); setSaved(false); setSavedJourney(false); setBusy(true); setStep(0);
     setRes(await edgeWaterCheck(src, setStep, outcome === "AUTO" ? undefined : outcome));
     setBusy(false);
-  };
-  const speak = () => {
-    if (!res) return;
-    setSpeaking(true);
-    try {
-      const u = new SpeechSynthesisUtterance(res.swahili);
-      u.lang = "sw-TZ";
-      const v = speechSynthesis.getVoices().find((x) => x.lang.toLowerCase().startsWith("sw"));
-      if (v) u.voice = v;
-      u.onend = () => setSpeaking(false);
-      speechSynthesis.cancel();
-      speechSynthesis.speak(u);
-      setTimeout(() => setSpeaking(false), 4000);
-    } catch { setTimeout(() => setSpeaking(false), 2000); }
   };
   const save = () => {
     if (!res) return;
@@ -160,14 +145,7 @@ function Water() {
             ))}
           </div>
 
-          <button onClick={speak} className="flex min-h-20 w-full items-center justify-center gap-3 rounded-3xl bg-earth text-earth-foreground transition active:scale-[0.98]">
-            <Volume2 className={cn("h-8 w-8", speaking && "animate-pulse")} />
-            <span className="text-left">
-              <span className="block font-display text-2xl font-extrabold tracking-wide">🔊 SIKILIZA</span>
-              <span className="block text-xs opacity-80">Swahili result available offline</span>
-            </span>
-          </button>
-          <p className="rounded-2xl border bg-card p-4 text-center font-display text-xl font-bold">“{res.swahili}”</p>
+          <p className="rounded-2xl border bg-card p-4 text-center font-display text-xl font-bold">Result: {res.classification} — confidence {res.confidence}%</p>
 
           <div className="surface p-4">
             <div className="mb-2 flex gap-1"><TrustBadge t="VERIFIED" /><TrustBadge t="AI_ASSESSMENT" /><TrustBadge t="SIMULATED" /></div>
