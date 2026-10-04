@@ -25,7 +25,7 @@ const Ctx = (g.__storeCtx ??= createContext<Store | null>(null));
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<AppData>(seedData);
-  const [online, setOnlineState] = useState(true);
+  const [online, setOnlineState] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const loaded = useRef(false);
 
@@ -113,7 +113,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const loadDemo = useCallback(() => {
     setData(seedData());
-    setOnlineState(true);
+    setOnlineState(false);
     toast.success("Demo mode loaded", { description: "Noor's complete journey is ready." });
   }, []);
 
